@@ -84,7 +84,7 @@ class FFTTest(c:FFT) extends PeekPokeTester(c)
     var errorOne: Double = 0
     var error1: Double = 0
     var ovNum1: Int = 0
-    var eps: Double = 1e-5
+    var eps: Double = 1e-9
     for (i <- 0 until FFTLength / 2) {
       var ref1 = ref(reverse(i * 2, log2Ceil(FFTLength)))
       var d1 = peek(c.io.dOut1)
@@ -108,7 +108,7 @@ class FFTTest(c:FFT) extends PeekPokeTester(c)
     ovNum += ovNum1
     error += errorOne
     var errorOnePercent = errorOne*100
-    printf("%.2f%% number of ovs: %d\n", errorOnePercent, ovNum1)
+    printf("In this sample, Error rate: %.2f%% | number of ovs: %d\n", errorOnePercent, ovNum1)
   }
   error /= iterNum
   print("Total error rate is: " + error*100 + "%\n")
