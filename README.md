@@ -1,4 +1,5 @@
 # Chisel-FFT
+*NOTE: The branch **BRAM** contains codes using BRAM explicitely in FPGA flow.*
 
 This Chisel project implements a [R2MDC](https://ieeexplore.ieee.org/document/7421167) (Radix-2 Multipath Delay Commutator) FFT hardware design, and the source and test files are organized as follows.
 
