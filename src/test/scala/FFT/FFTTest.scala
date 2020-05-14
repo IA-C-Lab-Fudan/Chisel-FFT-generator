@@ -64,7 +64,7 @@ class FFTTest(c:FFT) extends PeekPokeTester(c)
   var bound: Double = math.pow(2.0, BinaryPoint)
   var error: Double = 0
   var ovNum: Int = 0
-  var iterNum: Int = 100
+  var iterNum: Int = 1
 
   for (t <- 0 until iterNum) {
     var a = new Array[Complex](FFTLength)

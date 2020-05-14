@@ -41,16 +41,39 @@ class FFT extends Module
   when(io.din_valid){
     cnt := cnt + 1.U
   }
+  val cntD1 = RegNext(cnt)
+  val cntD2 = RegNext(cntD1)
+
   val out1 = VecInit(Seq.fill(stages + 1)(0.S((2 * DataWidth).W).asTypeOf(new MyComplex)))
   val out2 = VecInit(Seq.fill(stages + 1)(0.S((2 * DataWidth).W).asTypeOf(new MyComplex)))
-  out1(0) := io.dIn
-  out2(0) := io.dIn
+  if (useBRAM) {
+    out1(0) := RegNext(io.dIn)
+    out2(0) := RegNext(io.dIn)
+  } else {
+    out1(0) := io.dIn
+    out2(0) := io.dIn
+  }
 
   for (i <- 0 until stages - 1) {
     val wnCtrl = cnt(stages-2-i, 0)
-    val wn = wnTable(i)(wnCtrl)
+    val wn = Wire(new MyComplex())
+    val currentDep = 1 << (stages - 1 - i)
+    if (useBRAM && currentDep > depBound) {
+      val mem = Module(new BRAM(dep = log2Ceil(currentDep), dw = 2 * DataWidth))
+      mem.io.en := true.B
+      mem.io.addr := wnCtrl
+      mem.io.clock := clock.asUInt()
+      wn := mem.io.dout.asTypeOf(new MyComplex)
+    } else {
+      wn := wnTable(i)(wnCtrl)
+    }
     val BF12 = Butterfly(ShiftRegister(out1(i), (FFTLength / pow(2, i + 1)).toInt), out2(i), wn)
-    val swCtrl = cnt(stages-2-i)
+    val swCtrl = Wire(Bool())
+    if (useBRAM) {
+      swCtrl := cntD1(stages - 2 - i)
+    } else {
+      swCtrl := cnt(stages - 2 - i)
+    }
     val sw12 = Switch(BF12._1, ShiftRegister(BF12._2, (FFTLength / pow(2, i + 2)).toInt), swCtrl)
     out1(i + 1) := sw12._1
     out2(i + 1) := sw12._2
@@ -61,5 +84,10 @@ class FFT extends Module
 
   io.dOut1 := RegNext(out1(stages))
   io.dOut2 := RegNext(out2(stages))
-  io.dout_valid := ShiftRegister(io.din_valid, FFTLength)
+  if (useBRAM) {
+    io.dout_valid := cntD2 === (FFTLength - 1).asUInt()
+  }
+  else {
+    io.dout_valid := cntD1 === (FFTLength - 1).asUInt()
+  }
 }

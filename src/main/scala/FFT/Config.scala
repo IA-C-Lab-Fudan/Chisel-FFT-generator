@@ -7,6 +7,8 @@ trait HasDataConfig {
 }
 
 trait HasElaborateConfig {
-  val FFTLength = 512
+  val FFTLength = 128
   val useGauss = false
+  val useBRAM = false
+  val depBound = 16
 }
