@@ -11,6 +11,8 @@ class FFT extends Module
   with HasDataConfig
   with HasElaborateConfig {
   val io = IO(new Bundle {
+    // 0: FFT  1: IFFT
+    val mode = if(supportIFFT) Some(Input(Bool())) else None
     val dIn = Input(new MyComplex)
     val din_valid = Input(Bool())
     val dOut1 = Output(new MyComplex)
@@ -18,6 +20,8 @@ class FFT extends Module
     val dout_valid = Output(Bool())
   })
 
+  val mode = io.mode.getOrElse(false.B)
+  val stages = log2Ceil(FFTLength)
   def sinTable(k: Int): Vec[FixedPoint] = {
     val times = (0 until FFTLength / 2 by pow(2, k).toInt)
       .map(i => -(i * 2 * Pi) / FFTLength.toDouble)
@@ -25,22 +29,42 @@ class FFT extends Module
     VecInit(inits)
   }
   def cosTable(k: Int): Vec[FixedPoint] = {
-    val times = (0 until FFTLength / 2 by pow(2, k).toInt).map(i => (i * 2 * Pi) / FFTLength.toDouble)
+    val times = (0 until FFTLength / 2 by pow(2, k).toInt)
+      .map(i => -(i * 2 * Pi) / FFTLength.toDouble)
+    val inits = times.map(t => FixedPoint.fromDouble(cos(t), DataWidth.W, BinaryPoint.BP))
+    VecInit(inits)
+  }
+  def sinTable2(k: Int): Vec[FixedPoint] = {
+    val times = (0 until FFTLength / 2 by pow(2, k).toInt)
+      .map(i => (i * 2 * Pi) / FFTLength.toDouble)
+    val inits = times.map(t => FixedPoint.fromDouble(sin(t), DataWidth.W, BinaryPoint.BP))
+    VecInit(inits)
+  }
+  def cosTable2(k: Int): Vec[FixedPoint] = {
+    val times = (0 until FFTLength / 2 by pow(2, k).toInt)
+      .map(i => (i * 2 * Pi) / FFTLength.toDouble)
     val inits = times.map(t => FixedPoint.fromDouble(cos(t), DataWidth.W, BinaryPoint.BP))
     VecInit(inits)
   }
   def wnTable(k: Int)(idx: UInt): MyComplex = {
     val res = Wire(new MyComplex)
-    res.re := cosTable(k)(idx)
-    res.im := sinTable(k)(idx)
+    res.re := Mux(mode, cosTable2(k)(idx), cosTable(k)(idx))
+    res.im := Mux(mode, sinTable2(k)(idx), sinTable(k)(idx))
     res
   }
+  def timesInvn(a: MyComplex): MyComplex = {
+    val b = Wire(new MyComplex)
+    b.re := a.re >> stages
+    b.im := a.im >> stages
+    b
+  }
 
-  val stages = log2Ceil(FFTLength)
   val cnt = RegInit(0.U((stages).W))
   when(io.din_valid){
     cnt := cnt + 1.U
   }
+  val cntD1 = RegNext(cnt)
+
   val out1 = VecInit(Seq.fill(stages + 1)(0.S((2 * DataWidth).W).asTypeOf(new MyComplex)))
   val out2 = VecInit(Seq.fill(stages + 1)(0.S((2 * DataWidth).W).asTypeOf(new MyComplex)))
   out1(0) := io.dIn
@@ -58,8 +82,10 @@ class FFT extends Module
   val out1D1 = RegNext(out1(stages - 1))
   out1(stages) := ComplexAdd(out1D1, out2(stages - 1))
   out2(stages) := ComplexSub(out1D1, out2(stages - 1))
+  val dout1 = Mux(mode, timesInvn(out1(stages)), out1(stages))
+  val dout2 = Mux(mode, timesInvn(out2(stages)), out2(stages))
 
-  io.dOut1 := RegNext(out1(stages))
-  io.dOut2 := RegNext(out2(stages))
-  io.dout_valid := ShiftRegister(io.din_valid, FFTLength)
+  io.dOut1 := RegNext(dout1)
+  io.dOut2 := RegNext(dout2)
+  io.dout_valid := cntD1 === (FFTLength - 1).asUInt()
 }
