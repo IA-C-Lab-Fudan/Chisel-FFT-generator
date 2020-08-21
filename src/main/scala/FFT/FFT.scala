@@ -87,5 +87,5 @@ class FFT extends Module
 
   io.dOut1 := RegNext(dout1)
   io.dOut2 := RegNext(dout2)
-  io.dout_valid := cntD1 === (FFTLength - 1).asUInt()
+  io.dout_valid := ShiftRegister(io.din_valid, FFTLength) & ~(ShiftRegister(io.din_valid, FFTLength + FFTLength / 2))
 }

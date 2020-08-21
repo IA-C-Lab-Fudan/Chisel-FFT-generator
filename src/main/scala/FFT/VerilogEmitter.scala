@@ -19,3 +19,11 @@ object elaborateFFT extends App {
       TargetDirAnnotation("Verilog"))
   )
 }
+
+object elaborateFFTReorder extends App {
+  (new chisel3.stage.ChiselStage).execute(
+    Array("-X", "verilog", "--full-stacktrace"),
+    Seq(ChiselGeneratorAnnotation(() => new FFTReorder()),
+      TargetDirAnnotation("Verilog"))
+  )
+}

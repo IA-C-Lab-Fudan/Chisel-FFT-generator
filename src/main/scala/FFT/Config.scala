@@ -7,7 +7,7 @@ trait HasDataConfig {
 }
 
 trait HasElaborateConfig {
-  val FFTLength = 128
+  val FFTLength = 512
   val useGauss = false
-  val supportIFFT = true
+  val supportIFFT = false
 }
