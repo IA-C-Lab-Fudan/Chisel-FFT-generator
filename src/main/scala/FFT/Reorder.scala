@@ -15,7 +15,11 @@ class Reorder extends Module with HasDataConfig with HasElaborateConfig{ //整�
     val out_valid = Output(Bool())
   })
 
-  val databuffer = RegInit(VecInit(Seq.fill(FFTLength)(0.S((2*DataWidth).W).asTypeOf(new MyComplex)))) //数据缓存
+//  val databuffer = RegInit(VecInit(Seq.fill(FFTLength)(0.S((2*DataWidth).W).asTypeOf(new MyComplex)))) //数据缓存
+
+  val rambank0 = Mem(FFTLength/2, new MyComplex)
+  val rambank1 = Mem(FFTLength/2, new MyComplex)
+
 
   val times = log2Ceil(FFTLength / 2)
   val in_counter = RegInit(0.U(times.W))    //接收数据的次数，每次接受2数据
@@ -24,15 +28,24 @@ class Reorder extends Module with HasDataConfig with HasElaborateConfig{ //整�
   val index2 = Reverse(Cat(in_counter, 1.U(1.W)))  //周期0 就会有in_counter == 0，此时index1 = b000……00， index2 == b100……00.
   when(io.in_valid && !io.out_valid){                           //每次有效读入2数据
     in_counter := in_counter + 1.U
+    /*
     databuffer(index1) := io.in1
     databuffer(index2) := io.in2
+     */
+    rambank0.write(index1, io.in1)
+    rambank1.write(index2, io.in2)
   }
 
   io.out_valid := ShiftRegister(io.in_valid, FFTLength / 2) || ShiftRegister(io.in_valid, FFTLength)
   when(io.out_valid) {
     out_counter := out_counter + 1.U
   }
-  io.out := databuffer(out_counter)
+//  io.out := databuffer(out_counter)
+  when(out_counter < (FFTLength/2).U) {
+    io.out := rambank0.read(out_counter)
+  }.otherwise{
+    io.out := rambank1.read(out_counter)
+  }
 }
 
 class FFTReorder extends Module
