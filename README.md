@@ -70,7 +70,7 @@ We have already generated three Verilog files *FFT128*, *FFT256* and *FFT512* fo
 
 For more information, please see our article published on https://zhuanlan.zhihu.com/p/137260660 
 
-# Optimazation1: Chisel-FFT with reorder buffer
+# Optimization1: Chisel-FFT with reorder buffer
 
 For the complete process of FFT, a reorder buffer hardware is attached to the FFT module, which can be found in
 
