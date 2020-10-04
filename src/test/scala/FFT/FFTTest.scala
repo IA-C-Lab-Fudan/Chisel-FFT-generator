@@ -66,7 +66,7 @@ class FFTTest(c:FFT) extends PeekPokeTester(c)
   var bound: Double = math.pow(2.0, BinaryPoint)
   var error: Double = 0
   var ovNum: Int = 0
-  var iterNum: Int = 100
+  var iterNum: Int = 10
 
   for (t <- 0 until iterNum) {
     var a = new Array[Complex](FFTLength)
@@ -77,7 +77,11 @@ class FFTTest(c:FFT) extends PeekPokeTester(c)
       a(cnt) = new Complex(2 * re / bound, 2 * im / bound)
       poke(c.io.dIn.re, re)
       poke(c.io.dIn.im, im)
-      poke(c.io.din_valid, 1)
+      if (i == 0) {
+        poke(c.io.din_valid, 1)
+      } else {
+        poke(c.io.din_valid, 0)
+      }
       step(1)
       cnt += 1
     }
@@ -333,7 +337,9 @@ class FFTTest3(c:FFTReorder) extends PeekPokeTester(c)
   var bound: Double = math.pow(2.0, BinaryPoint)
   var error: Double = 0
   var ovNum: Int = 0
+  var iterNum: Int = 10
 
+  for (t <- 0 until iterNum) {
     var a = new Array[Complex](FFTLength)
     var cnt = 0
     for (i <- 0 until FFTLength) {
@@ -342,7 +348,11 @@ class FFTTest3(c:FFTReorder) extends PeekPokeTester(c)
       a(cnt) = new Complex(2 * re / bound, 2 * im / bound)
       poke(c.io.dIn.re, re)
       poke(c.io.dIn.im, im)
-      poke(c.io.din_valid, 1)
+      if (i == 0) {
+        poke(c.io.din_valid, 1)
+      } else {
+        poke(c.io.din_valid, 0)
+      }
       step(1)
       cnt += 1
     }
@@ -367,8 +377,102 @@ class FFTTest3(c:FFTReorder) extends PeekPokeTester(c)
     errorOne = errorOne / (FFTLength - ovNum1)
     ovNum += ovNum1
     error += errorOne
-    var errorOnePercent = errorOne*100
+    var errorOnePercent = errorOne * 100
     printf("In this sample, Error rate: %.2f%% | number of ovs: %d\n", errorOnePercent, ovNum1)
+  }
+}
+
+class FFTTest4(c:TOP) extends PeekPokeTester(c)
+  with HasDataConfig
+  with HasElaborateConfig {
+  require(!supportIFFT)
+  def fft(x: Array[Complex]): Array[Complex] = {
+    require(x.length > 0 && (x.length & (x.length - 1)) == 0, "array size should be power of two")
+    fft(x, 0, x.length, 1)
+  }
+
+  def fft(x: Array[Double]): Array[Complex] = fft(x.map(re => new Complex(re, 0.0)))
+  def rfft(x: Array[Double]): Array[Complex] = fft(x).take(x.length / 2 + 1)
+
+  private def fft(x: Array[Complex], start: Int, n: Int, stride: Int) : Array[Complex] = {
+    if (n == 1) {
+      return Array(x(start))
+    }
+
+    val X = fft(x, start, n / 2, 2 * stride) ++ fft(x, start + stride, n / 2, 2 * stride)
+
+    for (k <- 0 until n / 2) {
+      val t = X(k)
+      val arg = -2 * math.Pi * k / n
+      val c = new Complex(math.cos(arg), math.sin(arg)) * X(k + n / 2)
+      X(k) = t + c
+      X(k + n / 2) = t - c
+    }
+    X
+  }
+
+  def range(a: Int, upBound: Int, downBound: Int) : Int = {
+    assert(upBound < 32)
+    assert(downBound >= 0)
+    return (a >> downBound) & (0xffffffff >>> (31 - upBound + downBound))
+  }
+
+  def reverse(a: Int, len: Int): Int = {
+    var res: Int = 0
+    for(i <- 0 until len) {
+      res = res | range(a, i, i) << (len-1-i)
+    }
+    res
+  }
+
+  val r = new scala.util.Random
+  var bound: Double = math.pow(2.0, BinaryPoint)
+  var error: Double = 0
+  var ovNum: Int = 0
+  var iterNum: Int = 5
+
+  for (t <- 0 until iterNum) {
+    var a = new Array[Complex](FFTLength)
+    var cnt = 0
+    poke(c.io.dout.ready, 1)
+    for (i <- 0 until FFTLength) {
+      var re = -bound.toInt / 2 + r.nextInt(bound.toInt)
+      var im = -bound.toInt / 2 + r.nextInt(bound.toInt)
+      a(cnt) = new Complex(2 * re / bound, 2 * im / bound)
+      poke(c.io.din.bits.re, re)
+      poke(c.io.din.bits.im, im)
+      if (i == 0) {
+        poke(c.io.din.valid, 1)
+      } else {
+        poke(c.io.din.valid, 0)
+      }
+      step(1)
+      cnt += 1
+    }
+    var ref = fft(a)
+
+    var errorOne: Double = 0
+    var error1: Double = 0
+    var ovNum1: Int = 0
+    var eps: Double = 1e-9
+    step(FFTLength / 2 + 1)
+    for (i <- 0 until FFTLength) {
+      var ref1 = ref(i)
+      var d1 = peek(c.io.dout.bits)
+      error1 = math.abs((((2 * d1("re").toDouble / bound) - ref1.re) / (ref1.re + eps) + ((2 * d1("im").toDouble / bound) - ref1.im) / (ref1.im + eps)) / 2.0)
+      if (error1 <= 0.5) {
+        errorOne += error1
+      } else {
+        ovNum1 += 1
+      }
+      step(1)
+    }
+    errorOne = errorOne / (FFTLength - ovNum1)
+    ovNum += ovNum1
+    error += errorOne
+    var errorOnePercent = errorOne * 100
+    printf("In this sample, Error rate: %.2f%% | number of ovs: %d\n", errorOnePercent, ovNum1)
+  }
 }
 
 object FFTTestMain extends App {
@@ -382,7 +486,13 @@ object FFTTestMain2 extends App {
   }
 }
 object FFTTestMain3 extends App {
-  iotesters.Driver.execute(Array("--backend-name", "verilator"), () => new FFTReorder) {
+  iotesters.Driver.execute(args, () => new FFTReorder) {
     c => new FFTTest3(c)
+  }
+}
+
+object FFTTestMain4 extends App {
+  iotesters.Driver.execute(args, () => new TOP) {
+    c => new FFTTest4(c)
   }
 }

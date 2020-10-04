@@ -18,6 +18,7 @@ class FFT extends Module
     val dOut1 = Output(new MyComplex)
     val dOut2 = Output(new MyComplex)
     val dout_valid = Output(Bool())
+    val busy = Output(Bool())
   })
 
   val mode = io.mode.getOrElse(false.B)
@@ -59,11 +60,12 @@ class FFT extends Module
     b
   }
 
-  val cnt = RegInit(0.U((stages).W))
-  when(io.din_valid){
-    cnt := cnt + 1.U
+  val cnt = RegInit(0.U((stages + 1).W))
+  val busy = cnt =/= 0.U
+  when(io.din_valid || busy){
+    cnt := Mux(cnt === (FFTLength * 3 / 2 - 1).asUInt(), 0.U, cnt + 1.U)
   }
-  val cntD1 = RegNext(cnt)
+  io.busy := busy
 
   val out1 = VecInit(Seq.fill(stages + 1)(0.S((2 * DataWidth).W).asTypeOf(new MyComplex)))
   val out2 = VecInit(Seq.fill(stages + 1)(0.S((2 * DataWidth).W).asTypeOf(new MyComplex)))
@@ -87,5 +89,5 @@ class FFT extends Module
 
   io.dOut1 := RegNext(dout1)
   io.dOut2 := RegNext(dout2)
-  io.dout_valid := ShiftRegister(io.din_valid, FFTLength) & ~(ShiftRegister(io.din_valid, FFTLength + FFTLength / 2))
+  io.dout_valid := RegNext(cnt) === (FFTLength - 1).asUInt()
 }
