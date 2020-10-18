@@ -44,7 +44,7 @@ if { [info exists ::origin_dir_loc] } {
 }
 
 # Set the project name
-set _xil_proj_name_ "fft"
+set _xil_proj_name_ "stft"
 
 # Use project name variable, if specified in the tcl shell
 if { [info exists ::user_project_name] } {
@@ -138,9 +138,7 @@ if {[string equal [get_filesets -quiet sources_1] ""]} {
 set obj [get_filesets sources_1]
 # Import local files from the original project
 set files [list \
- [file normalize "${origin_dir}/FFT512.v" ]\
- [file normalize "${origin_dir}/FFT256.v" ]\
- [file normalize "${origin_dir}/FFT128.v" ]\
+ [file normalize "${origin_dir}/STFT.v" ]\
 ]
 set imported_files [import_files -fileset sources_1 $files]
 
@@ -152,14 +150,14 @@ set imported_files [import_files -fileset sources_1 $files]
 
 # Set 'sources_1' fileset properties
 set obj [get_filesets sources_1]
-set_property -name "top" -value "FFT512" -objects $obj
+set_property -name "top" -value "STFT" -objects $obj
 set_property -name "top_auto_set" -value "0" -objects $obj
 
 # Set 'sources_1' fileset object
 set obj [get_filesets sources_1]
 # Import local files from the original project
 set files [list \
- [file normalize "${origin_dir}/../fft.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci" ]\
+ [file normalize "${origin_dir}/../stft.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci" ]\
 ]
 set imported_files [import_files -fileset sources_1 $files]
 
@@ -206,7 +204,7 @@ set obj [get_filesets sim_1]
 
 # Set 'sim_1' fileset properties
 set obj [get_filesets sim_1]
-set_property -name "top" -value "FFT256" -objects $obj
+set_property -name "top" -value "STFT" -objects $obj
 set_property -name "top_lib" -value "xil_defaultlib" -objects $obj
 
 # Set 'utils_1' fileset object

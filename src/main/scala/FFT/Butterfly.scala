@@ -10,6 +10,17 @@ class MyComplex extends Bundle
   val im = FixedPoint(DataWidth.W, BinaryPoint.BP)
 }
 
+class MyFixedPoint extends Bundle
+  with HasDataConfig {
+  val value = FixedPoint(DataWidth.W, BinaryPoint.BP)
+}
+
+class EnergyOperationIO extends Bundle {
+  val op1 = Input(new MyComplex())
+  val op2= Input(new MyComplex())
+  val res = Output(new MyFixedPoint())
+}
+
 class ComplexOperationIO extends Bundle {
   val op1 = Input(new MyComplex())
   val op2= Input(new MyComplex())
@@ -43,6 +54,22 @@ object ComplexSub {
     inst.io.res
   }
 }
+
+
+class ComplexEnergy extends Module{
+  val io = IO(new EnergyOperationIO)
+  io.res.value := io.op1.re * io.op2.re + io.op1.im * io.op2.im
+}
+object ComplexEnergy{
+  def apply(op1: MyComplex, op2: MyComplex):MyFixedPoint = {
+    val inst = Module(new ComplexEnergy)
+    inst.io.op1 := op1
+    inst.io.op2 := op2
+    inst.io.res
+  }
+}
+
+
 
 class ComplexMul extends Module
   with HasElaborateConfig {
