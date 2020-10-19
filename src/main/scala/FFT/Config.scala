@@ -16,3 +16,7 @@ trait HasElaborateConfig {
 trait HasCosineNumberConfig{
   val CosineNumber = 720
 }
+
+trait HasFrameDataConfig{
+  val FrameDataNumber = 320
+}

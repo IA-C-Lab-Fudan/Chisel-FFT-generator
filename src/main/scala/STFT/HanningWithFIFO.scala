@@ -8,7 +8,8 @@ import scala.math._
 
 class HanningWithFIFO extends Module
   with HasDataConfig
-  with HasCosineNumberConfig {
+  with HasCosineNumberConfig
+  with HasElaborateConfig{
     val io = IO(new Bundle {
     val signal = Flipped(Decoupled(new MyFixedPoint))
     val cosines = Flipped(Decoupled(new MyFixedPoint))
@@ -16,12 +17,12 @@ class HanningWithFIFO extends Module
   })
 
   val Hanningblock: Hanning = Module(new Hanning)
-  val HanningFIFO: MyFifo = Module(new MyFifo(depth = 1024,threshold = 512))
+  val HanningFIFO: MyFifo = Module(new MyFifo(depth = 2*FFTLength,threshold = FFTLength))
 
   val BurstValid = RegInit(false.B)
   val BurstReadCnt = RegInit(0.U(32.W))
   val BurstTransEn = Wire(Bool())
-  BurstTransEn := BurstValid  || (BurstReadCnt<512.U) && (BurstReadCnt> 0.U)
+  BurstTransEn := BurstValid  || (BurstReadCnt< FFTLength.U) && (BurstReadCnt> 0.U)
 
   when(io.HanningSignal.ready && BurstValid){
     BurstReadCnt := BurstReadCnt + 1.U
@@ -30,7 +31,7 @@ class HanningWithFIFO extends Module
     BurstReadCnt := BurstReadCnt + 1.U
   }.otherwise{
     BurstReadCnt := 0.U
-    when(HanningFIFO.io.MorethanN){ BurstValid := true.B }
+    when(HanningFIFO.io.MorethanN && io.HanningSignal.ready){ BurstValid := true.B }
   }
 
   Hanningblock.io.signal <> io.signal

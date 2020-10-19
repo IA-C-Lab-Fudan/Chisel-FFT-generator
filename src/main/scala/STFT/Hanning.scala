@@ -9,7 +9,9 @@ import scala.math._
 
 class Hanning extends Module
   with HasDataConfig
-  with HasCosineNumberConfig {
+  with HasCosineNumberConfig
+  with HasFrameDataConfig
+  with HasElaborateConfig {
   val io = IO(new Bundle {
     val signal = Flipped(Decoupled(new MyFixedPoint))
     val cosines = Flipped(Decoupled(new MyFixedPoint))
@@ -24,28 +26,28 @@ class Hanning extends Module
     cosinesbank_wcnt := cosinesbank_wcnt + 1.U
     cosinesbank.write(cosinesbank_wcnt, io.cosines.bits)
   }
-  io.cosines.ready := io.cosines.valid && (cosinesbank_wcnt < 720.U)
+  io.cosines.ready := io.cosines.valid && (cosinesbank_wcnt < CosineNumber.U)
 
   //FSM transfer signal
   val s_idle :: s_trans :: ss_impl_zero :: Nil = Enum(3)
   val state = RegInit(init = s_idle)
   //state transfer
   when(state === s_idle){
-    when(io.signal.valid && io.signal.ready && cosinesbank_rcnt<320.U){
+    when(io.signal.valid && io.signal.ready && cosinesbank_rcnt<FrameDataNumber.U){
       state := s_trans
-    }.elsewhen(io.signal.valid && io.signal.ready && cosinesbank_rcnt<512.U){
+    }.elsewhen(io.signal.valid && io.signal.ready && cosinesbank_rcnt<FFTLength.U){
       state := ss_impl_zero
     }
   }.elsewhen(state === s_trans){
-    when(io.signal.valid && io.signal.ready && cosinesbank_rcnt<320.U){
+    when(io.signal.valid && io.signal.ready && cosinesbank_rcnt<FrameDataNumber.U){
       state := s_trans
-    }.elsewhen(io.signal.valid && io.signal.ready && cosinesbank_rcnt<512.U){
+    }.elsewhen(io.signal.valid && io.signal.ready && cosinesbank_rcnt<FFTLength.U){
       state := ss_impl_zero
     }.otherwise{
       state := s_idle
     }
   }.elsewhen(state === ss_impl_zero){
-      when(io.HanningSignal.ready && io.HanningSignal.valid && cosinesbank_rcnt < 512.U){
+      when(io.HanningSignal.ready && io.HanningSignal.valid && cosinesbank_rcnt < FFTLength.U){
         state := ss_impl_zero
       }.otherwise{           //pause or halt
         state := s_idle
@@ -59,7 +61,7 @@ class Hanning extends Module
   when(state === s_idle){
     io.signal.ready := io.HanningSignal.ready && io.signal.valid  //i_ready
     io.HanningSignal.valid := false.B           //o_valid
-    when(cosinesbank_rcnt === 513.U){cosinesbank_rcnt:= 0.U} //halt
+    when(cosinesbank_rcnt === (FFTLength + 1).U){cosinesbank_rcnt:= 0.U} //halt
   }.elsewhen(state === s_trans){
     cosinesbank_rcnt := cosinesbank_rcnt + 1.U //cnt++
     hanning_signal.value := io.signal.bits.value * cosinesbank.read(cosinesbank_rcnt).value  //compute hanning window

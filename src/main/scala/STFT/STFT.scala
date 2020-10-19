@@ -30,13 +30,6 @@ class STFT extends Module
   io.signal <> HanningBlock.io.signal
   io.cosines <> HanningBlock.io.cosines
 
-//  val HanningRI = Decoupled(new MyComplex)
-//  HanningRI.bits := R2RI(HanningBlock.io.HanningSignal.bits)
-//  HanningRI.valid := HanningBlock.io.HanningSignal.valid
-//  HanningRI.ready := HanningBlock.io.HanningSignal.ready
-
-//  FFTBlock.io.din <>  HanningRI
-
   FFTBlock.io.din.bits := R2RI(HanningBlock.io.HanningSignal.bits)
   FFTBlock.io.din.valid := HanningBlock.io.HanningSignal.valid
   HanningBlock.io.HanningSignal.ready := FFTBlock.io.din.ready
