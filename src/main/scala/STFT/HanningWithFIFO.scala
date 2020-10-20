@@ -22,7 +22,7 @@ class HanningWithFIFO extends Module
   val BurstValid = RegInit(false.B)
   val BurstReadCnt = RegInit(0.U(32.W))
   val BurstTransEn = Wire(Bool())
-  BurstTransEn := BurstValid  || (BurstReadCnt< FFTLength.U) && (BurstReadCnt> 0.U)
+  BurstTransEn :=  (BurstReadCnt< FFTLength.U) && (BurstReadCnt> 0.U)
 
   when(io.HanningSignal.ready && BurstValid){
     BurstReadCnt := BurstReadCnt + 1.U
@@ -31,7 +31,8 @@ class HanningWithFIFO extends Module
     BurstReadCnt := BurstReadCnt + 1.U
   }.otherwise{
     BurstReadCnt := 0.U
-    when(HanningFIFO.io.MorethanN && io.HanningSignal.ready){ BurstValid := true.B }
+     //when(HanningFIFO.io.MorethanN && io.HanningSignal.ready){ BurstValid := true.B }
+    when(HanningFIFO.io.MorethanN ){ BurstValid := true.B }
   }
 
   Hanningblock.io.signal <> io.signal

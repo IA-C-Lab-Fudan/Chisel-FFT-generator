@@ -23,57 +23,57 @@ module Hanning(
   reg [31:0] _RAND_4;
   reg [31:0] _RAND_5;
 `endif // RANDOMIZE_REG_INIT
-  reg [31:0] cosinesbank_value [0:719]; // @[Hanning.scala 20:28]
-  wire [31:0] cosinesbank_value__T_32_data; // @[Hanning.scala 20:28]
-  wire [9:0] cosinesbank_value__T_32_addr; // @[Hanning.scala 20:28]
-  wire [31:0] cosinesbank_value__T_4_data; // @[Hanning.scala 20:28]
-  wire [9:0] cosinesbank_value__T_4_addr; // @[Hanning.scala 20:28]
-  wire  cosinesbank_value__T_4_mask; // @[Hanning.scala 20:28]
-  wire  cosinesbank_value__T_4_en; // @[Hanning.scala 20:28]
-  reg [31:0] cosinesbank_wcnt; // @[Hanning.scala 21:33]
-  reg [31:0] cosinesbank_rcnt; // @[Hanning.scala 22:33]
-  wire  _T = io_cosines_valid & io_cosines_ready; // @[Hanning.scala 23:25]
-  wire [31:0] _T_2 = cosinesbank_wcnt + 32'h1; // @[Hanning.scala 24:42]
-  wire  _T_5 = cosinesbank_wcnt < 32'h2d0; // @[Hanning.scala 27:61]
-  reg [1:0] state; // @[Hanning.scala 31:22]
-  wire  _T_7 = state == 2'h0; // @[Hanning.scala 33:14]
-  wire  _T_8 = io_signal_valid & io_signal_ready; // @[Hanning.scala 34:26]
-  wire  _T_9 = cosinesbank_rcnt < 32'h140; // @[Hanning.scala 34:64]
-  wire  _T_10 = _T_8 & _T_9; // @[Hanning.scala 34:45]
-  wire  _T_12 = cosinesbank_rcnt < 32'h200; // @[Hanning.scala 36:70]
-  wire  _T_13 = _T_8 & _T_12; // @[Hanning.scala 36:51]
-  wire  _T_14 = state == 2'h1; // @[Hanning.scala 39:20]
-  wire  _T_21 = state == 2'h2; // @[Hanning.scala 47:20]
-  wire  _T_22 = io_HanningSignal_ready & io_HanningSignal_valid; // @[Hanning.scala 48:35]
-  wire  _T_24 = _T_22 & _T_12; // @[Hanning.scala 48:61]
-  reg [31:0] hanning_signal_value; // @[Hanning.scala 55:27]
-  wire  _T_26 = io_HanningSignal_ready & io_signal_valid; // @[Hanning.scala 60:47]
-  wire  _T_27 = cosinesbank_rcnt == 32'h201; // @[Hanning.scala 62:27]
-  wire [31:0] _T_30 = cosinesbank_rcnt + 32'h1; // @[Hanning.scala 64:42]
-  wire [63:0] _T_33 = $signed(io_signal_bits_value) * $signed(cosinesbank_value__T_32_data); // @[Hanning.scala 65:50]
-  wire [31:0] _GEN_16 = _T_21 ? $signed(32'sh0) : $signed(hanning_signal_value); // @[Hanning.scala 68:37]
-  wire  _GEN_17 = _T_21 ? 1'h0 : 1'h1; // @[Hanning.scala 68:37]
-  wire [47:0] _GEN_33 = {$signed(_GEN_16), 16'h0}; // @[Hanning.scala 63:32]
-  wire [63:0] _GEN_23 = _T_14 ? $signed(_T_33) : $signed({{16{_GEN_33[47]}},_GEN_33}); // @[Hanning.scala 63:32]
-  wire  _GEN_24 = _T_14 ? io_HanningSignal_ready : _GEN_17; // @[Hanning.scala 63:32]
-  wire  _GEN_25 = _T_14 | _T_21; // @[Hanning.scala 63:32]
-  wire [47:0] _GEN_34 = {$signed(hanning_signal_value), 16'h0}; // @[Hanning.scala 59:25]
-  wire [63:0] _GEN_32 = _T_7 ? $signed({{16{_GEN_34[47]}},_GEN_34}) : $signed(_GEN_23); // @[Hanning.scala 59:25]
-  wire [47:0] _GEN_35 = _GEN_32[63:16]; // @[Hanning.scala 65:26 Hanning.scala 70:26]
+  reg [31:0] cosinesbank_value [0:719]; // @[Hanning.scala 22:28]
+  wire [31:0] cosinesbank_value__T_32_data; // @[Hanning.scala 22:28]
+  wire [9:0] cosinesbank_value__T_32_addr; // @[Hanning.scala 22:28]
+  wire [31:0] cosinesbank_value__T_4_data; // @[Hanning.scala 22:28]
+  wire [9:0] cosinesbank_value__T_4_addr; // @[Hanning.scala 22:28]
+  wire  cosinesbank_value__T_4_mask; // @[Hanning.scala 22:28]
+  wire  cosinesbank_value__T_4_en; // @[Hanning.scala 22:28]
+  reg [31:0] cosinesbank_wcnt; // @[Hanning.scala 23:33]
+  reg [31:0] cosinesbank_rcnt; // @[Hanning.scala 24:33]
+  wire  _T = io_cosines_valid & io_cosines_ready; // @[Hanning.scala 25:25]
+  wire [31:0] _T_2 = cosinesbank_wcnt + 32'h1; // @[Hanning.scala 26:42]
+  wire  _T_5 = cosinesbank_wcnt < 32'h2d0; // @[Hanning.scala 29:61]
+  reg [1:0] state; // @[Hanning.scala 33:22]
+  wire  _T_7 = state == 2'h0; // @[Hanning.scala 35:14]
+  wire  _T_8 = io_signal_valid & io_signal_ready; // @[Hanning.scala 36:26]
+  wire  _T_9 = cosinesbank_rcnt < 32'h140; // @[Hanning.scala 36:64]
+  wire  _T_10 = _T_8 & _T_9; // @[Hanning.scala 36:45]
+  wire  _T_12 = cosinesbank_rcnt < 32'h200; // @[Hanning.scala 38:70]
+  wire  _T_13 = _T_8 & _T_12; // @[Hanning.scala 38:51]
+  wire  _T_14 = state == 2'h1; // @[Hanning.scala 41:20]
+  wire  _T_21 = state == 2'h2; // @[Hanning.scala 49:20]
+  wire  _T_22 = io_HanningSignal_ready & io_HanningSignal_valid; // @[Hanning.scala 50:35]
+  wire  _T_24 = _T_22 & _T_12; // @[Hanning.scala 50:61]
+  reg [31:0] hanning_signal_value; // @[Hanning.scala 57:27]
+  wire  _T_26 = io_HanningSignal_ready & io_signal_valid; // @[Hanning.scala 62:47]
+  wire  _T_27 = cosinesbank_rcnt == 32'h201; // @[Hanning.scala 64:27]
+  wire [31:0] _T_30 = cosinesbank_rcnt + 32'h1; // @[Hanning.scala 66:42]
+  wire [63:0] _T_33 = $signed(io_signal_bits_value) * $signed(cosinesbank_value__T_32_data); // @[Hanning.scala 67:50]
+  wire [31:0] _GEN_16 = _T_21 ? $signed(32'sh0) : $signed(hanning_signal_value); // @[Hanning.scala 70:37]
+  wire  _GEN_17 = _T_21 ? 1'h0 : 1'h1; // @[Hanning.scala 70:37]
+  wire [47:0] _GEN_33 = {$signed(_GEN_16), 16'h0}; // @[Hanning.scala 65:32]
+  wire [63:0] _GEN_23 = _T_14 ? $signed(_T_33) : $signed({{16{_GEN_33[47]}},_GEN_33}); // @[Hanning.scala 65:32]
+  wire  _GEN_24 = _T_14 ? io_HanningSignal_ready : _GEN_17; // @[Hanning.scala 65:32]
+  wire  _GEN_25 = _T_14 | _T_21; // @[Hanning.scala 65:32]
+  wire [47:0] _GEN_34 = {$signed(hanning_signal_value), 16'h0}; // @[Hanning.scala 61:25]
+  wire [63:0] _GEN_32 = _T_7 ? $signed({{16{_GEN_34[47]}},_GEN_34}) : $signed(_GEN_23); // @[Hanning.scala 61:25]
+  wire [47:0] _GEN_35 = _GEN_32[63:16]; // @[Hanning.scala 67:26 Hanning.scala 72:26]
   assign cosinesbank_value__T_32_addr = cosinesbank_rcnt[9:0];
   `ifndef RANDOMIZE_GARBAGE_ASSIGN
-  assign cosinesbank_value__T_32_data = cosinesbank_value[cosinesbank_value__T_32_addr]; // @[Hanning.scala 20:28]
+  assign cosinesbank_value__T_32_data = cosinesbank_value[cosinesbank_value__T_32_addr]; // @[Hanning.scala 22:28]
   `else
-  assign cosinesbank_value__T_32_data = cosinesbank_value__T_32_addr >= 10'h2d0 ? _RAND_1[31:0] : cosinesbank_value[cosinesbank_value__T_32_addr]; // @[Hanning.scala 20:28]
+  assign cosinesbank_value__T_32_data = cosinesbank_value__T_32_addr >= 10'h2d0 ? _RAND_1[31:0] : cosinesbank_value[cosinesbank_value__T_32_addr]; // @[Hanning.scala 22:28]
   `endif // RANDOMIZE_GARBAGE_ASSIGN
   assign cosinesbank_value__T_4_data = io_cosines_bits_value;
   assign cosinesbank_value__T_4_addr = cosinesbank_wcnt[9:0];
   assign cosinesbank_value__T_4_mask = 1'h1;
   assign cosinesbank_value__T_4_en = io_cosines_valid & io_cosines_ready;
-  assign io_signal_ready = _T_7 ? _T_26 : _GEN_24; // @[Hanning.scala 60:21 Hanning.scala 66:21 Hanning.scala 71:21 Hanning.scala 74:21]
-  assign io_cosines_ready = io_cosines_valid & _T_5; // @[Hanning.scala 27:20]
-  assign io_HanningSignal_valid = _T_7 ? 1'h0 : _GEN_25; // @[Hanning.scala 61:28 Hanning.scala 67:28 Hanning.scala 72:28 Hanning.scala 75:28]
-  assign io_HanningSignal_bits_value = hanning_signal_value; // @[Hanning.scala 57:25]
+  assign io_signal_ready = _T_7 ? _T_26 : _GEN_24; // @[Hanning.scala 62:21 Hanning.scala 68:21 Hanning.scala 73:21 Hanning.scala 76:21]
+  assign io_cosines_ready = io_cosines_valid & _T_5; // @[Hanning.scala 29:20]
+  assign io_HanningSignal_valid = _T_7 ? 1'h0 : _GEN_25; // @[Hanning.scala 63:28 Hanning.scala 69:28 Hanning.scala 74:28 Hanning.scala 77:28]
+  assign io_HanningSignal_bits_value = hanning_signal_value; // @[Hanning.scala 59:25]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -134,7 +134,7 @@ end // initial
 `endif // SYNTHESIS
   always @(posedge clock) begin
     if(cosinesbank_value__T_4_en & cosinesbank_value__T_4_mask) begin
-      cosinesbank_value[cosinesbank_value__T_4_addr] <= cosinesbank_value__T_4_data; // @[Hanning.scala 20:28]
+      cosinesbank_value[cosinesbank_value__T_4_addr] <= cosinesbank_value__T_4_data; // @[Hanning.scala 22:28]
     end
     if (reset) begin
       cosinesbank_wcnt <= 32'h0;
@@ -385,37 +385,36 @@ module HanningWithFIFO(
   reg [31:0] _RAND_0;
   reg [31:0] _RAND_1;
 `endif // RANDOMIZE_REG_INIT
-  wire  Hanningblock_clock; // @[HanningWithFIFO.scala 18:37]
-  wire  Hanningblock_reset; // @[HanningWithFIFO.scala 18:37]
-  wire  Hanningblock_io_signal_ready; // @[HanningWithFIFO.scala 18:37]
-  wire  Hanningblock_io_signal_valid; // @[HanningWithFIFO.scala 18:37]
-  wire [31:0] Hanningblock_io_signal_bits_value; // @[HanningWithFIFO.scala 18:37]
-  wire  Hanningblock_io_cosines_ready; // @[HanningWithFIFO.scala 18:37]
-  wire  Hanningblock_io_cosines_valid; // @[HanningWithFIFO.scala 18:37]
-  wire [31:0] Hanningblock_io_cosines_bits_value; // @[HanningWithFIFO.scala 18:37]
-  wire  Hanningblock_io_HanningSignal_ready; // @[HanningWithFIFO.scala 18:37]
-  wire  Hanningblock_io_HanningSignal_valid; // @[HanningWithFIFO.scala 18:37]
-  wire [31:0] Hanningblock_io_HanningSignal_bits_value; // @[HanningWithFIFO.scala 18:37]
-  wire  HanningFIFO_clock; // @[HanningWithFIFO.scala 19:35]
-  wire  HanningFIFO_reset; // @[HanningWithFIFO.scala 19:35]
-  wire [31:0] HanningFIFO_io_datain_value; // @[HanningWithFIFO.scala 19:35]
-  wire [31:0] HanningFIFO_io_dataout_value; // @[HanningWithFIFO.scala 19:35]
-  wire  HanningFIFO_io_wr; // @[HanningWithFIFO.scala 19:35]
-  wire  HanningFIFO_io_rd; // @[HanningWithFIFO.scala 19:35]
-  wire  HanningFIFO_io_full; // @[HanningWithFIFO.scala 19:35]
-  wire  HanningFIFO_io_empty; // @[HanningWithFIFO.scala 19:35]
-  wire  HanningFIFO_io_MorethanN; // @[HanningWithFIFO.scala 19:35]
-  wire [31:0] HanningFIFO_io_count; // @[HanningWithFIFO.scala 19:35]
-  reg  BurstValid; // @[HanningWithFIFO.scala 21:27]
-  reg [31:0] BurstReadCnt; // @[HanningWithFIFO.scala 22:29]
-  wire  _T = BurstReadCnt < 32'h200; // @[HanningWithFIFO.scala 24:47]
-  wire  _T_1 = BurstReadCnt > 32'h0; // @[HanningWithFIFO.scala 24:71]
-  wire  _T_2 = _T & _T_1; // @[HanningWithFIFO.scala 24:55]
-  wire  BurstTransEn = BurstValid | _T_2; // @[HanningWithFIFO.scala 24:31]
-  wire  _T_4 = io_HanningSignal_ready & BurstValid; // @[HanningWithFIFO.scala 26:31]
-  wire [31:0] _T_6 = BurstReadCnt + 32'h1; // @[HanningWithFIFO.scala 27:34]
-  wire  _GEN_0 = HanningFIFO_io_MorethanN | BurstValid; // @[HanningWithFIFO.scala 33:35]
-  Hanning Hanningblock ( // @[HanningWithFIFO.scala 18:37]
+  wire  Hanningblock_clock; // @[HanningWithFIFO.scala 19:37]
+  wire  Hanningblock_reset; // @[HanningWithFIFO.scala 19:37]
+  wire  Hanningblock_io_signal_ready; // @[HanningWithFIFO.scala 19:37]
+  wire  Hanningblock_io_signal_valid; // @[HanningWithFIFO.scala 19:37]
+  wire [31:0] Hanningblock_io_signal_bits_value; // @[HanningWithFIFO.scala 19:37]
+  wire  Hanningblock_io_cosines_ready; // @[HanningWithFIFO.scala 19:37]
+  wire  Hanningblock_io_cosines_valid; // @[HanningWithFIFO.scala 19:37]
+  wire [31:0] Hanningblock_io_cosines_bits_value; // @[HanningWithFIFO.scala 19:37]
+  wire  Hanningblock_io_HanningSignal_ready; // @[HanningWithFIFO.scala 19:37]
+  wire  Hanningblock_io_HanningSignal_valid; // @[HanningWithFIFO.scala 19:37]
+  wire [31:0] Hanningblock_io_HanningSignal_bits_value; // @[HanningWithFIFO.scala 19:37]
+  wire  HanningFIFO_clock; // @[HanningWithFIFO.scala 20:35]
+  wire  HanningFIFO_reset; // @[HanningWithFIFO.scala 20:35]
+  wire [31:0] HanningFIFO_io_datain_value; // @[HanningWithFIFO.scala 20:35]
+  wire [31:0] HanningFIFO_io_dataout_value; // @[HanningWithFIFO.scala 20:35]
+  wire  HanningFIFO_io_wr; // @[HanningWithFIFO.scala 20:35]
+  wire  HanningFIFO_io_rd; // @[HanningWithFIFO.scala 20:35]
+  wire  HanningFIFO_io_full; // @[HanningWithFIFO.scala 20:35]
+  wire  HanningFIFO_io_empty; // @[HanningWithFIFO.scala 20:35]
+  wire  HanningFIFO_io_MorethanN; // @[HanningWithFIFO.scala 20:35]
+  wire [31:0] HanningFIFO_io_count; // @[HanningWithFIFO.scala 20:35]
+  reg  BurstValid; // @[HanningWithFIFO.scala 22:27]
+  reg [31:0] BurstReadCnt; // @[HanningWithFIFO.scala 23:29]
+  wire  _T = BurstReadCnt < 32'h200; // @[HanningWithFIFO.scala 25:33]
+  wire  _T_1 = BurstReadCnt > 32'h0; // @[HanningWithFIFO.scala 25:64]
+  wire  BurstTransEn = _T & _T_1; // @[HanningWithFIFO.scala 25:48]
+  wire  _T_3 = io_HanningSignal_ready & BurstValid; // @[HanningWithFIFO.scala 27:31]
+  wire [31:0] _T_5 = BurstReadCnt + 32'h1; // @[HanningWithFIFO.scala 28:34]
+  wire  _GEN_0 = HanningFIFO_io_MorethanN | BurstValid; // @[HanningWithFIFO.scala 35:36]
+  Hanning Hanningblock ( // @[HanningWithFIFO.scala 19:37]
     .clock(Hanningblock_clock),
     .reset(Hanningblock_reset),
     .io_signal_ready(Hanningblock_io_signal_ready),
@@ -428,7 +427,7 @@ module HanningWithFIFO(
     .io_HanningSignal_valid(Hanningblock_io_HanningSignal_valid),
     .io_HanningSignal_bits_value(Hanningblock_io_HanningSignal_bits_value)
   );
-  MyFifo HanningFIFO ( // @[HanningWithFIFO.scala 19:35]
+  MyFifo HanningFIFO ( // @[HanningWithFIFO.scala 20:35]
     .clock(HanningFIFO_clock),
     .reset(HanningFIFO_reset),
     .io_datain_value(HanningFIFO_io_datain_value),
@@ -440,22 +439,22 @@ module HanningWithFIFO(
     .io_MorethanN(HanningFIFO_io_MorethanN),
     .io_count(HanningFIFO_io_count)
   );
-  assign io_signal_ready = Hanningblock_io_signal_ready; // @[HanningWithFIFO.scala 36:26]
-  assign io_cosines_ready = Hanningblock_io_cosines_ready; // @[HanningWithFIFO.scala 37:27]
-  assign io_HanningSignal_valid = BurstValid; // @[HanningWithFIFO.scala 39:26]
-  assign io_HanningSignal_bits_value = HanningFIFO_io_dataout_value; // @[HanningWithFIFO.scala 40:26]
+  assign io_signal_ready = Hanningblock_io_signal_ready; // @[HanningWithFIFO.scala 38:26]
+  assign io_cosines_ready = Hanningblock_io_cosines_ready; // @[HanningWithFIFO.scala 39:27]
+  assign io_HanningSignal_valid = BurstValid; // @[HanningWithFIFO.scala 41:26]
+  assign io_HanningSignal_bits_value = HanningFIFO_io_dataout_value; // @[HanningWithFIFO.scala 42:26]
   assign Hanningblock_clock = clock;
   assign Hanningblock_reset = reset;
-  assign Hanningblock_io_signal_valid = io_signal_valid; // @[HanningWithFIFO.scala 36:26]
-  assign Hanningblock_io_signal_bits_value = io_signal_bits_value; // @[HanningWithFIFO.scala 36:26]
-  assign Hanningblock_io_cosines_valid = io_cosines_valid; // @[HanningWithFIFO.scala 37:27]
-  assign Hanningblock_io_cosines_bits_value = io_cosines_bits_value; // @[HanningWithFIFO.scala 37:27]
-  assign Hanningblock_io_HanningSignal_ready = ~HanningFIFO_io_full; // @[HanningWithFIFO.scala 45:39]
+  assign Hanningblock_io_signal_valid = io_signal_valid; // @[HanningWithFIFO.scala 38:26]
+  assign Hanningblock_io_signal_bits_value = io_signal_bits_value; // @[HanningWithFIFO.scala 38:26]
+  assign Hanningblock_io_cosines_valid = io_cosines_valid; // @[HanningWithFIFO.scala 39:27]
+  assign Hanningblock_io_cosines_bits_value = io_cosines_bits_value; // @[HanningWithFIFO.scala 39:27]
+  assign Hanningblock_io_HanningSignal_ready = ~HanningFIFO_io_full; // @[HanningWithFIFO.scala 47:39]
   assign HanningFIFO_clock = clock;
   assign HanningFIFO_reset = reset;
-  assign HanningFIFO_io_datain_value = Hanningblock_io_HanningSignal_bits_value; // @[HanningWithFIFO.scala 43:25]
-  assign HanningFIFO_io_wr = Hanningblock_io_HanningSignal_valid; // @[HanningWithFIFO.scala 44:21]
-  assign HanningFIFO_io_rd = BurstReadCnt != 32'h0; // @[HanningWithFIFO.scala 47:21]
+  assign HanningFIFO_io_datain_value = Hanningblock_io_HanningSignal_bits_value; // @[HanningWithFIFO.scala 45:25]
+  assign HanningFIFO_io_wr = Hanningblock_io_HanningSignal_valid; // @[HanningWithFIFO.scala 46:21]
+  assign HanningFIFO_io_rd = BurstReadCnt != 32'h0; // @[HanningWithFIFO.scala 49:21]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -505,17 +504,17 @@ end // initial
   always @(posedge clock) begin
     if (reset) begin
       BurstValid <= 1'h0;
-    end else if (_T_4) begin
+    end else if (_T_3) begin
       BurstValid <= 1'h0;
     end else if (!(BurstTransEn)) begin
       BurstValid <= _GEN_0;
     end
     if (reset) begin
       BurstReadCnt <= 32'h0;
-    end else if (_T_4) begin
-      BurstReadCnt <= _T_6;
+    end else if (_T_3) begin
+      BurstReadCnt <= _T_5;
     end else if (BurstTransEn) begin
-      BurstReadCnt <= _T_6;
+      BurstReadCnt <= _T_5;
     end else begin
       BurstReadCnt <= 32'h0;
     end
@@ -9107,22 +9106,13 @@ module SpectrogramGen(
   wire [31:0] ComplexEnergy_io_op2_re; // @[Butterfly.scala 65:22]
   wire [31:0] ComplexEnergy_io_op2_im; // @[Butterfly.scala 65:22]
   wire [31:0] ComplexEnergy_io_res_value; // @[Butterfly.scala 65:22]
-  wire [31:0] ComplexEnergy_1_io_op1_re; // @[Butterfly.scala 65:22]
-  wire [31:0] ComplexEnergy_1_io_op1_im; // @[Butterfly.scala 65:22]
-  wire [31:0] ComplexEnergy_1_io_op2_re; // @[Butterfly.scala 65:22]
-  wire [31:0] ComplexEnergy_1_io_op2_im; // @[Butterfly.scala 65:22]
-  wire [31:0] ComplexEnergy_1_io_res_value; // @[Butterfly.scala 65:22]
-  reg [31:0] SpectrogramReg_value; // @[SpectrogramGen.scala 17:27]
-  reg [9:0] SpectrogramCnt; // @[SpectrogramGen.scala 18:31]
-  reg  Spectrogram_valid; // @[SpectrogramGen.scala 19:34]
-  wire  _T = io_FFTsignal_valid & io_Spectrogram_ready; // @[SpectrogramGen.scala 21:28]
-  wire [9:0] _T_2 = SpectrogramCnt + 10'h1; // @[SpectrogramGen.scala 25:38]
-  wire  _T_3 = SpectrogramCnt < 10'h200; // @[SpectrogramGen.scala 26:29]
-  wire  _T_4 = SpectrogramCnt != 10'h0; // @[SpectrogramGen.scala 26:55]
-  wire  _T_5 = _T_3 & _T_4; // @[SpectrogramGen.scala 26:37]
-  wire  _T_8 = SpectrogramCnt < 10'h102; // @[SpectrogramGen.scala 29:25]
-  wire  _GEN_4 = _T_5 & _T_8; // @[SpectrogramGen.scala 26:64]
-  wire  _GEN_6 = _T | _GEN_4; // @[SpectrogramGen.scala 21:52]
+  reg [31:0] SpectrogramReg_value; // @[SpectrogramGen.scala 18:27]
+  reg [9:0] SpectrogramCnt; // @[SpectrogramGen.scala 19:31]
+  reg  Spectrogram_valid; // @[SpectrogramGen.scala 20:34]
+  wire  _T = io_FFTsignal_valid & io_Spectrogram_ready; // @[SpectrogramGen.scala 22:28]
+  wire  _T_1 = SpectrogramCnt < 10'h101; // @[SpectrogramGen.scala 24:25]
+  wire [9:0] _T_3 = SpectrogramCnt + 10'h1; // @[SpectrogramGen.scala 26:40]
+  wire  _T_4 = SpectrogramCnt < 10'h200; // @[SpectrogramGen.scala 27:31]
   ComplexEnergy ComplexEnergy ( // @[Butterfly.scala 65:22]
     .io_op1_re(ComplexEnergy_io_op1_re),
     .io_op1_im(ComplexEnergy_io_op1_im),
@@ -9130,24 +9120,13 @@ module SpectrogramGen(
     .io_op2_im(ComplexEnergy_io_op2_im),
     .io_res_value(ComplexEnergy_io_res_value)
   );
-  ComplexEnergy ComplexEnergy_1 ( // @[Butterfly.scala 65:22]
-    .io_op1_re(ComplexEnergy_1_io_op1_re),
-    .io_op1_im(ComplexEnergy_1_io_op1_im),
-    .io_op2_re(ComplexEnergy_1_io_op2_re),
-    .io_op2_im(ComplexEnergy_1_io_op2_im),
-    .io_res_value(ComplexEnergy_1_io_res_value)
-  );
-  assign io_FFTsignal_ready = io_Spectrogram_ready; // @[SpectrogramGen.scala 20:22]
-  assign io_Spectrogram_valid = Spectrogram_valid; // @[SpectrogramGen.scala 44:24]
-  assign io_Spectrogram_bits_value = SpectrogramReg_value; // @[SpectrogramGen.scala 43:23]
+  assign io_FFTsignal_ready = io_Spectrogram_ready; // @[SpectrogramGen.scala 48:22]
+  assign io_Spectrogram_valid = Spectrogram_valid; // @[SpectrogramGen.scala 50:24]
+  assign io_Spectrogram_bits_value = SpectrogramReg_value; // @[SpectrogramGen.scala 49:23]
   assign ComplexEnergy_io_op1_re = io_FFTsignal_bits_re; // @[Butterfly.scala 66:17]
   assign ComplexEnergy_io_op1_im = io_FFTsignal_bits_im; // @[Butterfly.scala 66:17]
   assign ComplexEnergy_io_op2_re = io_FFTsignal_bits_re; // @[Butterfly.scala 67:17]
   assign ComplexEnergy_io_op2_im = io_FFTsignal_bits_im; // @[Butterfly.scala 67:17]
-  assign ComplexEnergy_1_io_op1_re = io_FFTsignal_bits_re; // @[Butterfly.scala 66:17]
-  assign ComplexEnergy_1_io_op1_im = io_FFTsignal_bits_im; // @[Butterfly.scala 66:17]
-  assign ComplexEnergy_1_io_op2_re = io_FFTsignal_bits_re; // @[Butterfly.scala 67:17]
-  assign ComplexEnergy_1_io_op2_im = io_FFTsignal_bits_im; // @[Butterfly.scala 67:17]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -9199,24 +9178,22 @@ end // initial
   always @(posedge clock) begin
     if (_T) begin
       SpectrogramReg_value <= ComplexEnergy_io_res_value;
-    end else if (_T_5) begin
-      if (_T_8) begin
-        SpectrogramReg_value <= ComplexEnergy_1_io_res_value;
-      end
     end
     if (reset) begin
       SpectrogramCnt <= 10'h0;
     end else if (_T) begin
-      SpectrogramCnt <= _T_2;
-    end else if (_T_5) begin
-      SpectrogramCnt <= _T_2;
-    end else begin
-      SpectrogramCnt <= 10'h0;
+      if (_T_1) begin
+        SpectrogramCnt <= _T_3;
+      end else if (_T_4) begin
+        SpectrogramCnt <= _T_3;
+      end else begin
+        SpectrogramCnt <= 10'h0;
+      end
     end
     if (reset) begin
       Spectrogram_valid <= 1'h0;
-    end else begin
-      Spectrogram_valid <= _GEN_6;
+    end else if (_T) begin
+      Spectrogram_valid <= _T_1;
     end
   end
 endmodule
@@ -9231,28 +9208,29 @@ module SpectrogramGenWithFIFO(
   output        io_Spectrogram_valid,
   output [31:0] io_Spectrogram_bits_value
 );
-  wire  SpectrogramGenblock_clock; // @[SpectrogramGenWithFIFO.scala 16:51]
-  wire  SpectrogramGenblock_reset; // @[SpectrogramGenWithFIFO.scala 16:51]
-  wire  SpectrogramGenblock_io_FFTsignal_ready; // @[SpectrogramGenWithFIFO.scala 16:51]
-  wire  SpectrogramGenblock_io_FFTsignal_valid; // @[SpectrogramGenWithFIFO.scala 16:51]
-  wire [31:0] SpectrogramGenblock_io_FFTsignal_bits_re; // @[SpectrogramGenWithFIFO.scala 16:51]
-  wire [31:0] SpectrogramGenblock_io_FFTsignal_bits_im; // @[SpectrogramGenWithFIFO.scala 16:51]
-  wire  SpectrogramGenblock_io_Spectrogram_ready; // @[SpectrogramGenWithFIFO.scala 16:51]
-  wire  SpectrogramGenblock_io_Spectrogram_valid; // @[SpectrogramGenWithFIFO.scala 16:51]
-  wire [31:0] SpectrogramGenblock_io_Spectrogram_bits_value; // @[SpectrogramGenWithFIFO.scala 16:51]
-  wire  SpectrogramFIFO_clock; // @[SpectrogramGenWithFIFO.scala 17:39]
-  wire  SpectrogramFIFO_reset; // @[SpectrogramGenWithFIFO.scala 17:39]
-  wire [31:0] SpectrogramFIFO_io_datain_value; // @[SpectrogramGenWithFIFO.scala 17:39]
-  wire [31:0] SpectrogramFIFO_io_dataout_value; // @[SpectrogramGenWithFIFO.scala 17:39]
-  wire  SpectrogramFIFO_io_wr; // @[SpectrogramGenWithFIFO.scala 17:39]
-  wire  SpectrogramFIFO_io_rd; // @[SpectrogramGenWithFIFO.scala 17:39]
-  wire  SpectrogramFIFO_io_full; // @[SpectrogramGenWithFIFO.scala 17:39]
-  wire  SpectrogramFIFO_io_empty; // @[SpectrogramGenWithFIFO.scala 17:39]
-  wire  SpectrogramFIFO_io_MorethanN; // @[SpectrogramGenWithFIFO.scala 17:39]
-  wire [31:0] SpectrogramFIFO_io_count; // @[SpectrogramGenWithFIFO.scala 17:39]
-  wire [31:0] _T_1 = 32'h384 - SpectrogramFIFO_io_count; // @[SpectrogramGenWithFIFO.scala 37:56]
-  wire  _T_3 = ~SpectrogramFIFO_io_empty; // @[SpectrogramGenWithFIFO.scala 41:33]
-  SpectrogramGen SpectrogramGenblock ( // @[SpectrogramGenWithFIFO.scala 16:51]
+  wire  SpectrogramGenblock_clock; // @[SpectrogramGenWithFIFO.scala 17:51]
+  wire  SpectrogramGenblock_reset; // @[SpectrogramGenWithFIFO.scala 17:51]
+  wire  SpectrogramGenblock_io_FFTsignal_ready; // @[SpectrogramGenWithFIFO.scala 17:51]
+  wire  SpectrogramGenblock_io_FFTsignal_valid; // @[SpectrogramGenWithFIFO.scala 17:51]
+  wire [31:0] SpectrogramGenblock_io_FFTsignal_bits_re; // @[SpectrogramGenWithFIFO.scala 17:51]
+  wire [31:0] SpectrogramGenblock_io_FFTsignal_bits_im; // @[SpectrogramGenWithFIFO.scala 17:51]
+  wire  SpectrogramGenblock_io_Spectrogram_ready; // @[SpectrogramGenWithFIFO.scala 17:51]
+  wire  SpectrogramGenblock_io_Spectrogram_valid; // @[SpectrogramGenWithFIFO.scala 17:51]
+  wire [31:0] SpectrogramGenblock_io_Spectrogram_bits_value; // @[SpectrogramGenWithFIFO.scala 17:51]
+  wire  SpectrogramFIFO_clock; // @[SpectrogramGenWithFIFO.scala 18:39]
+  wire  SpectrogramFIFO_reset; // @[SpectrogramGenWithFIFO.scala 18:39]
+  wire [31:0] SpectrogramFIFO_io_datain_value; // @[SpectrogramGenWithFIFO.scala 18:39]
+  wire [31:0] SpectrogramFIFO_io_dataout_value; // @[SpectrogramGenWithFIFO.scala 18:39]
+  wire  SpectrogramFIFO_io_wr; // @[SpectrogramGenWithFIFO.scala 18:39]
+  wire  SpectrogramFIFO_io_rd; // @[SpectrogramGenWithFIFO.scala 18:39]
+  wire  SpectrogramFIFO_io_full; // @[SpectrogramGenWithFIFO.scala 18:39]
+  wire  SpectrogramFIFO_io_empty; // @[SpectrogramGenWithFIFO.scala 18:39]
+  wire  SpectrogramFIFO_io_MorethanN; // @[SpectrogramGenWithFIFO.scala 18:39]
+  wire [31:0] SpectrogramFIFO_io_count; // @[SpectrogramGenWithFIFO.scala 18:39]
+  wire [31:0] _T_1 = 32'h400 - SpectrogramFIFO_io_count; // @[SpectrogramGenWithFIFO.scala 23:67]
+  wire  _T_4 = ~SpectrogramFIFO_io_empty; // @[SpectrogramGenWithFIFO.scala 27:33]
+  wire  _T_5 = SpectrogramFIFO_io_wr & SpectrogramFIFO_io_empty; // @[SpectrogramGenWithFIFO.scala 27:85]
+  SpectrogramGen SpectrogramGenblock ( // @[SpectrogramGenWithFIFO.scala 17:51]
     .clock(SpectrogramGenblock_clock),
     .reset(SpectrogramGenblock_reset),
     .io_FFTsignal_ready(SpectrogramGenblock_io_FFTsignal_ready),
@@ -9263,7 +9241,7 @@ module SpectrogramGenWithFIFO(
     .io_Spectrogram_valid(SpectrogramGenblock_io_Spectrogram_valid),
     .io_Spectrogram_bits_value(SpectrogramGenblock_io_Spectrogram_bits_value)
   );
-  MyFifo SpectrogramFIFO ( // @[SpectrogramGenWithFIFO.scala 17:39]
+  MyFifo SpectrogramFIFO ( // @[SpectrogramGenWithFIFO.scala 18:39]
     .clock(SpectrogramFIFO_clock),
     .reset(SpectrogramFIFO_reset),
     .io_datain_value(SpectrogramFIFO_io_datain_value),
@@ -9275,20 +9253,20 @@ module SpectrogramGenWithFIFO(
     .io_MorethanN(SpectrogramFIFO_io_MorethanN),
     .io_count(SpectrogramFIFO_io_count)
   );
-  assign io_FFTsignal_ready = SpectrogramGenblock_io_FFTsignal_ready; // @[SpectrogramGenWithFIFO.scala 34:16]
-  assign io_Spectrogram_valid = _T_3 & io_Spectrogram_ready; // @[SpectrogramGenWithFIFO.scala 41:30]
-  assign io_Spectrogram_bits_value = SpectrogramFIFO_io_dataout_value; // @[SpectrogramGenWithFIFO.scala 42:30]
+  assign io_FFTsignal_ready = SpectrogramGenblock_io_FFTsignal_ready; // @[SpectrogramGenWithFIFO.scala 20:16]
+  assign io_Spectrogram_valid = _T_4 | _T_5; // @[SpectrogramGenWithFIFO.scala 27:30]
+  assign io_Spectrogram_bits_value = SpectrogramFIFO_io_dataout_value; // @[SpectrogramGenWithFIFO.scala 28:30]
   assign SpectrogramGenblock_clock = clock;
   assign SpectrogramGenblock_reset = reset;
-  assign SpectrogramGenblock_io_FFTsignal_valid = io_FFTsignal_valid; // @[SpectrogramGenWithFIFO.scala 34:16]
-  assign SpectrogramGenblock_io_FFTsignal_bits_re = io_FFTsignal_bits_re; // @[SpectrogramGenWithFIFO.scala 34:16]
-  assign SpectrogramGenblock_io_FFTsignal_bits_im = io_FFTsignal_bits_im; // @[SpectrogramGenWithFIFO.scala 34:16]
-  assign SpectrogramGenblock_io_Spectrogram_ready = _T_1 > 32'h101; // @[SpectrogramGenWithFIFO.scala 37:44]
+  assign SpectrogramGenblock_io_FFTsignal_valid = io_FFTsignal_valid; // @[SpectrogramGenWithFIFO.scala 20:16]
+  assign SpectrogramGenblock_io_FFTsignal_bits_re = io_FFTsignal_bits_re; // @[SpectrogramGenWithFIFO.scala 20:16]
+  assign SpectrogramGenblock_io_FFTsignal_bits_im = io_FFTsignal_bits_im; // @[SpectrogramGenWithFIFO.scala 20:16]
+  assign SpectrogramGenblock_io_Spectrogram_ready = _T_1 > 32'h101; // @[SpectrogramGenWithFIFO.scala 23:44]
   assign SpectrogramFIFO_clock = clock;
   assign SpectrogramFIFO_reset = reset;
-  assign SpectrogramFIFO_io_datain_value = SpectrogramGenblock_io_Spectrogram_bits_value; // @[SpectrogramGenWithFIFO.scala 38:30]
-  assign SpectrogramFIFO_io_wr = SpectrogramGenblock_io_Spectrogram_valid; // @[SpectrogramGenWithFIFO.scala 39:30]
-  assign SpectrogramFIFO_io_rd = io_Spectrogram_ready; // @[SpectrogramGenWithFIFO.scala 40:30]
+  assign SpectrogramFIFO_io_datain_value = SpectrogramGenblock_io_Spectrogram_bits_value; // @[SpectrogramGenWithFIFO.scala 24:30]
+  assign SpectrogramFIFO_io_wr = SpectrogramGenblock_io_Spectrogram_valid; // @[SpectrogramGenWithFIFO.scala 25:30]
+  assign SpectrogramFIFO_io_rd = io_Spectrogram_ready & io_Spectrogram_valid; // @[SpectrogramGenWithFIFO.scala 26:30]
 endmodule
 module STFT(
   input         clock,
@@ -9369,24 +9347,24 @@ module STFT(
   );
   assign io_signal_ready = HanningBlock_io_signal_ready; // @[STFT.scala 30:13]
   assign io_cosines_ready = HanningBlock_io_cosines_ready; // @[STFT.scala 31:14]
-  assign io_spectrogram_valid = SpectrogramGenBlock_io_Spectrogram_valid; // @[STFT.scala 46:18]
-  assign io_spectrogram_bits_value = SpectrogramGenBlock_io_Spectrogram_bits_value; // @[STFT.scala 46:18]
+  assign io_spectrogram_valid = SpectrogramGenBlock_io_Spectrogram_valid; // @[STFT.scala 39:18]
+  assign io_spectrogram_bits_value = SpectrogramGenBlock_io_Spectrogram_bits_value; // @[STFT.scala 39:18]
   assign HanningBlock_clock = clock;
   assign HanningBlock_reset = reset;
   assign HanningBlock_io_signal_valid = io_signal_valid; // @[STFT.scala 30:13]
   assign HanningBlock_io_signal_bits_value = io_signal_bits_value; // @[STFT.scala 30:13]
   assign HanningBlock_io_cosines_valid = io_cosines_valid; // @[STFT.scala 31:14]
   assign HanningBlock_io_cosines_bits_value = io_cosines_bits_value; // @[STFT.scala 31:14]
-  assign HanningBlock_io_HanningSignal_ready = FFTBlock_io_din_ready; // @[STFT.scala 42:39]
+  assign HanningBlock_io_HanningSignal_ready = FFTBlock_io_din_ready; // @[STFT.scala 35:39]
   assign FFTBlock_clock = clock;
   assign FFTBlock_reset = reset;
-  assign FFTBlock_io_din_valid = HanningBlock_io_HanningSignal_valid; // @[STFT.scala 41:25]
-  assign FFTBlock_io_din_bits_re = HanningBlock_io_HanningSignal_bits_value; // @[STFT.scala 40:24]
-  assign FFTBlock_io_dout_ready = SpectrogramGenBlock_io_FFTsignal_ready; // @[STFT.scala 44:20]
+  assign FFTBlock_io_din_valid = HanningBlock_io_HanningSignal_valid; // @[STFT.scala 34:25]
+  assign FFTBlock_io_din_bits_re = HanningBlock_io_HanningSignal_bits_value; // @[STFT.scala 33:24]
+  assign FFTBlock_io_dout_ready = SpectrogramGenBlock_io_FFTsignal_ready; // @[STFT.scala 37:20]
   assign SpectrogramGenBlock_clock = clock;
   assign SpectrogramGenBlock_reset = reset;
-  assign SpectrogramGenBlock_io_FFTsignal_valid = FFTBlock_io_dout_valid; // @[STFT.scala 44:20]
-  assign SpectrogramGenBlock_io_FFTsignal_bits_re = FFTBlock_io_dout_bits_re; // @[STFT.scala 44:20]
-  assign SpectrogramGenBlock_io_FFTsignal_bits_im = FFTBlock_io_dout_bits_im; // @[STFT.scala 44:20]
-  assign SpectrogramGenBlock_io_Spectrogram_ready = io_spectrogram_ready; // @[STFT.scala 46:18]
+  assign SpectrogramGenBlock_io_FFTsignal_valid = FFTBlock_io_dout_valid; // @[STFT.scala 37:20]
+  assign SpectrogramGenBlock_io_FFTsignal_bits_re = FFTBlock_io_dout_bits_re; // @[STFT.scala 37:20]
+  assign SpectrogramGenBlock_io_FFTsignal_bits_im = FFTBlock_io_dout_bits_im; // @[STFT.scala 37:20]
+  assign SpectrogramGenBlock_io_Spectrogram_ready = io_spectrogram_ready; // @[STFT.scala 39:18]
 endmodule
