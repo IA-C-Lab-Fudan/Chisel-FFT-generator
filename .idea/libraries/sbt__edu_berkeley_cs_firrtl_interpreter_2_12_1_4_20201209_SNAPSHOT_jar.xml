@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="sbt: edu.berkeley.cs:firrtl-interpreter_2.12:1.4-20201209-SNAPSHOT:jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/null/Coursier/cache/v1/https/oss.sonatype.org/content/repositories/snapshots/edu/berkeley/cs/firrtl-interpreter_2.12/1.4-20201209-SNAPSHOT/firrtl-interpreter_2.12-1.4-20201209-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/null/Coursier/cache/v1/https/oss.sonatype.org/content/repositories/snapshots/edu/berkeley/cs/firrtl-interpreter_2.12/1.4-20201209-SNAPSHOT/firrtl-interpreter_2.12-1.4-20201209-SNAPSHOT-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/null/Coursier/cache/v1/https/oss.sonatype.org/content/repositories/snapshots/edu/berkeley/cs/firrtl-interpreter_2.12/1.4-20201209-SNAPSHOT/firrtl-interpreter_2.12-1.4-20201209-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

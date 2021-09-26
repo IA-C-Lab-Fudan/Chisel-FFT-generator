@@ -1,0 +1,8 @@
+project/target
+target/*
+test_run_dir
+null
+./*.v
+./*.fir
+./*.anno.json
+./generated
