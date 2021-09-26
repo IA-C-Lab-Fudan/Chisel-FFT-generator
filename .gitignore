@@ -6,3 +6,5 @@ null
 ./*.fir
 ./*.anno.json
 ./generated
+.bsp
+.idea
