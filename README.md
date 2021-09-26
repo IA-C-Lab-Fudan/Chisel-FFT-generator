@@ -1,7 +1,8 @@
 # Chisel-FFT  
 *NOTE:   
 The branch **BRAM** contains codes using BRAM explicitely in FPGA flow.  
-The branch **STFT** contains a **Chisel-STFT** project applied to Short-time Fourier transform*  
+The branch **STFT** contains a **Chisel-STFT** project applied to Short-time Fourier transform
+The branch **FFT-Generator** contains a project supporting more configurations for the flexiblity of construction and datafromat*  
   
 This Chisel project implements a [R2MDC](https://ieeexplore.ieee.org/document/7421167) (Radix-2 Multipath Delay Commutator) FFT hardware design, and the source and test files are organized as follows.
 
